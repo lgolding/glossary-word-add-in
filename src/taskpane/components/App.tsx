@@ -3,6 +3,7 @@ import { DefaultButton } from "@fluentui/react";
 import Header from "./Header";
 import HeroList, { HeroListItem } from "./HeroList";
 import Progress from "./Progress";
+import GlossaryService from "../GlossaryService";
 
 /* global Word, require */
 
@@ -33,15 +34,9 @@ const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
 
   const click = async () => {
     return Word.run(async (context) => {
-      /**
-       * Insert your Word code here
-       */
-
-      // insert a paragraph at the end of the document.
-      const paragraph = context.document.body.insertParagraph("Hello World", Word.InsertLocation.end);
-
-      // change the paragraph color to blue.
-      paragraph.font.color = "blue";
+      // Insert a Glossary at the end of the document.
+      const glossaryService = new GlossaryService(context);
+      glossaryService.ensureGlossaryTable();
 
       await context.sync();
     });
@@ -61,11 +56,8 @@ const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
     <div className="ms-welcome">
       <Header logo={require("./../../../assets/logo-filled.png")} title={title} message="Welcome" />
       <HeroList message="Discover what Office Add-ins can do for you today!" items={listItems}>
-        <p className="ms-font-l">
-          Modify the source files, then click <b>Run</b>.
-        </p>
         <DefaultButton className="ms-welcome__action" iconProps={{ iconName: "ChevronRight" }} onClick={click}>
-          Run
+          Create Glossary Table
         </DefaultButton>
       </HeroList>
     </div>
