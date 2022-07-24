@@ -13,7 +13,7 @@ let isOfficeInitialized = false;
 
 const title = "Aster Systems Inc Glossary Add-in";
 
-const render = (Component) => {
+const render = (Component: any) => {
   ReactDOM.render(
     <AppContainer>
       <ThemeProvider>

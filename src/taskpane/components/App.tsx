@@ -16,7 +16,7 @@ export interface AppState {
 }
 
 export default class App extends React.Component<AppProps, AppState> {
-  constructor(props, context) {
+  constructor(props: any, context: any) {
     super(props, context);
     this.state = {
       listItems: [],
@@ -28,7 +28,7 @@ export default class App extends React.Component<AppProps, AppState> {
       listItems: [
         {
           icon: "Ribbon",
-          primaryText: "Achieve more with Office integration",
+          primaryText: "Achieve more with Office integration!!!!",
         },
         {
           icon: "Unlock",
