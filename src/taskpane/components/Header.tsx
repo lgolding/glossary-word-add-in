@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { FC } from "react";
 
 export interface HeaderProps {
   title: string;
@@ -6,7 +6,7 @@ export interface HeaderProps {
   message: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ title, logo, message }) => (
+const Header: FC<HeaderProps> = ({ title, logo, message }) => (
   <section className="ms-welcome__header ms-bgColor-neutralLighter ms-u-fadeIn500">
     <img width="90" height="90" src={logo} alt={title} title={title} />
     <h1 className="ms-fontSize-su ms-fontWeight-light ms-fontColor-neutralPrimary">{message}</h1>

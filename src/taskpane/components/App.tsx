@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { FC, useEffect, useState } from "react";
 import { DefaultButton } from "@fluentui/react";
 import Header from "./Header";
 import HeroList, { HeroListItem } from "./HeroList";
@@ -11,10 +11,10 @@ export interface AppProps {
   isOfficeInitialized: boolean;
 }
 
-const App: React.FC<AppProps> = ({ title, isOfficeInitialized }) => {
-  var [listItems, setListItems] = React.useState<HeroListItem[]>([]);
+const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
+  var [listItems, setListItems] = useState<HeroListItem[]>([]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     setListItems([
       {
         icon: "Ribbon",
