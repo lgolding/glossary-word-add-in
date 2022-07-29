@@ -33,13 +33,9 @@ const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
   }, []);
 
   const click = async () => {
-    return Word.run(async (context) => {
-      // Insert a Glossary at the end of the document.
-      const glossaryService = new GlossaryService(context);
-      glossaryService.ensureGlossaryTable();
-
-      await context.sync();
-    });
+    // Insert a Glossary at the end of the document.
+    const glossaryService = new GlossaryService();
+    await glossaryService.ensureGlossaryTable();
   };
 
   if (!isOfficeInitialized) {
