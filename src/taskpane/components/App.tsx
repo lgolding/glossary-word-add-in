@@ -33,9 +33,19 @@ const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
   }, []);
 
   const click = async () => {
-    // Insert a Glossary at the end of the document.
-    const glossaryService = new GlossaryService();
-    await glossaryService.ensureGlossaryTable();
+    return Word.run(async (context: Word.RequestContext) => {
+      // Insert a Glossary at the end of the document.
+      const glossaryService = new GlossaryService();
+      glossaryService.ensureGlossaryTable(context);
+
+      await context.sync();
+    }).catch(function (error: any) {
+      // Catch and log any errors that occur within `Word.run`.
+      console.log(`Error: ${error}`);
+      if (error instanceof OfficeExtension.Error) {
+        console.log(`Debug information: ${JSON.stringify(error.debugInfo)}`);
+      }
+    });
   };
 
   if (!isOfficeInitialized) {

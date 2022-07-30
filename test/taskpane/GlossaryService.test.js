@@ -6,21 +6,20 @@ const mockData = {
   context: {
     document: {
       body: {
-        insertTable(
-          _rowCount: number,
-          _columnCount: number,
-          _insertLocation: Word.InsertLocation,
-          _values: string[][]
-        ) {},
+        tables: {
+          count: 0,
+        },
+        // Mock the Body.insertTable method.
+        insertTable(_rowCount, _columnCount, _insertLocation, _values) {
+          this.tables.count = 1;
+        },
       },
     },
   },
-  // Mock the Word.InsertLocation enum.
   InsertLocation: {
     end: "end",
   },
-  // Mock the Word.run function.
-  run: async function (callback: any) {
+  run: async function (callback) {
     await callback(this.context);
   },
 };
@@ -34,8 +33,15 @@ global.Word = wordMock;
 // Implement the tests below this line.
 
 describe("The GlossaryService", () => {
-  test("should create a table", () => {
-    const glossaryService = new GlossaryService();
-    glossaryService.ensureGlossaryTable();
+  test("should create a table", async () => {
+    await Word.run(async (context) => {
+      // Insert a Glossary at the end of the document.
+      const glossaryService = new GlossaryService();
+      glossaryService.ensureGlossaryTable(context);
+
+      await context.sync();
+    });
+
+    expect(mockData.context.document.body.tables.count).toBe(1);
   });
 });
