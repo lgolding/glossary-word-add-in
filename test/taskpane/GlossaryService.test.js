@@ -1,17 +1,16 @@
 const OfficeAddinMock = require("office-addin-mock");
 import GlossaryService from "../../src/taskpane/services/GlossaryService";
 
+var numTables = 0;
+
 // Create the seed mock object.
 const mockData = {
   context: {
     document: {
       body: {
-        tables: {
-          count: 0,
-        },
         // Mock the Body.insertTable method.
         insertTable(_rowCount, _columnCount, _insertLocation, _values) {
-          this.tables.count = 1;
+          ++numTables;
         },
       },
     },
@@ -34,6 +33,8 @@ global.Word = wordMock;
 
 describe("The GlossaryService", () => {
   test("should create a table", async () => {
+    numTables = 0;
+
     await Word.run(async (context) => {
       // Insert a Glossary at the end of the document.
       const glossaryService = new GlossaryService(context);
@@ -42,6 +43,6 @@ describe("The GlossaryService", () => {
       await context.sync();
     });
 
-    expect(mockData.context.document.body.tables.count).toBe(1);
+    expect(numTables).toBe(1);
   });
 });
