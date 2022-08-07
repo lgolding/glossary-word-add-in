@@ -36,7 +36,7 @@ const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
     return Word.run(async (context: Word.RequestContext) => {
       // Insert a Glossary at the end of the document.
       const glossaryService = new GlossaryService(context);
-      glossaryService.ensureGlossaryTable();
+      await glossaryService.ensureGlossaryTable();
 
       await context.sync();
     }).catch(function (error: any) {

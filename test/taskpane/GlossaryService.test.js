@@ -38,7 +38,7 @@ describe("The GlossaryService", () => {
     await Word.run(async (context) => {
       // Insert a Glossary at the end of the document.
       const glossaryService = new GlossaryService(context);
-      glossaryService.ensureGlossaryTable();
+      await glossaryService.ensureGlossaryTable();
 
       await context.sync();
     });
