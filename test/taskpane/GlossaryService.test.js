@@ -8,6 +8,9 @@ const mockData = {
   context: {
     document: {
       body: {
+        tables: {
+          items: [],
+        },
         // Mock the Body.insertTable method.
         insertTable(_rowCount, _columnCount, _insertLocation, _values) {
           ++numTables;
@@ -32,7 +35,7 @@ global.Word = wordMock;
 // Implement the tests below this line.
 
 describe("The GlossaryService", () => {
-  test("should create a table", async () => {
+  test("should create a table!", async () => {
     numTables = 0;
 
     await Word.run(async (context) => {

@@ -4,7 +4,7 @@ export default class GlossaryService {
   async ensureGlossaryTable() {
     const body: Word.Body = this.context.document.body;
     const tables = body.tables;
-    tables.load();
+    tables.load("items");
     await this.context.sync();
 
     if (tables.items.length === 0) {

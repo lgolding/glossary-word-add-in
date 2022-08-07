@@ -1,8 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
-import { DefaultButton } from "@fluentui/react";
+import GlossaryUI from "../components/GlossaryUI";
 import Header from "./Header";
 import Progress from "./Progress";
-import GlossaryService from "../services/GlossaryService";
 
 /* global Word, require */
 
@@ -12,22 +11,6 @@ export interface AppProps {
 }
 
 const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
-  const click = async () => {
-    return Word.run(async (context: Word.RequestContext) => {
-      // Insert a Glossary at the end of the document.
-      const glossaryService = new GlossaryService(context);
-      await glossaryService.ensureGlossaryTable();
-
-      await context.sync();
-    }).catch(function (error: any) {
-      // Catch and log any errors that occur within `Word.run`.
-      console.log(`Error: ${error}`);
-      if (error instanceof OfficeExtension.Error) {
-        console.log(`Debug information: ${JSON.stringify(error.debugInfo)}`);
-      }
-    });
-  };
-
   if (!isOfficeInitialized) {
     return (
       <Progress
@@ -41,9 +24,7 @@ const App: FC<AppProps> = ({ title, isOfficeInitialized }) => {
   return (
     <div className="ms-welcome">
       <Header logo={require("./../../../assets/logo-filled.png")} title={title} message="Welcome" />
-      <DefaultButton className="ms-welcome__action" iconProps={{ iconName: "ChevronRight" }} onClick={click}>
-        Create Glossary Table
-      </DefaultButton>
+      <GlossaryUI />
     </div>
   );
 };
