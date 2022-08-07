@@ -40,10 +40,13 @@ global.Word = wordMock;
 describe("The GlossaryService", () => {
   test("should create glossary table if it does not already exist", async () => {
     await Word.run(async (context) => {
-      context.document.body.tables.load("items");
+      const body = context.document.body;
+      const tables = body.tables;
+      tables.load("items");
       await context.sync();
 
-      context.document.body.tables.items.length = 0;
+      // Ensure that there are no tables at all.
+      tables.items.length = 0;
 
       // Insert a Glossary at the end of the document.
       const glossaryService = new GlossaryService(context);
@@ -57,11 +60,14 @@ describe("The GlossaryService", () => {
 
   test("should not create glossary table if it already exists", async () => {
     await Word.run(async (context) => {
-      context.document.body.tables.load("items");
+      const body = context.document.body;
+      const tables = body.tables;
+      tables.load("items");
       await context.sync();
 
-      context.document.body.tables.items.length = 0;
-      context.document.body.insertTable(2, 2, "End", [[]]);
+      // Ensure that there is already a table.
+      tables.items.length = 0;
+      body.insertTable(2, 2, "End", [[]]);
 
       // Insert a Glossary at the end of the document.
       const glossaryService = new GlossaryService(context);
