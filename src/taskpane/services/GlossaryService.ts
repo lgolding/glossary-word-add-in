@@ -1,7 +1,7 @@
 export default class GlossaryService {
   constructor(private context: Word.RequestContext) {}
 
-  async ensureGlossaryTable() {
+  async ensureGlossaryTable(): Promise<void> {
     const body: Word.Body = this.context.document.body;
     const tables = body.tables;
     tables.load("items");
@@ -9,8 +9,12 @@ export default class GlossaryService {
 
     const glossaryTable: Word.Table | undefined = this.findGlossaryTable(tables.items);
     if (glossaryTable === undefined) {
-      body.insertTable(2, 2, Word.InsertLocation.end, [["Term", "Definition"]]);
+      this.insertGlossaryTable();
     }
+  }
+
+  private insertGlossaryTable(): void {
+    this.context.document.body.insertTable(2, 2, Word.InsertLocation.end, [["Term", "Definition"]]);
   }
 
   private findGlossaryTable(tableItems: Word.Table[]): Word.Table | undefined {
