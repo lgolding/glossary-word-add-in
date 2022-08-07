@@ -38,7 +38,7 @@ global.Word = wordMock;
 // Implement the tests below this line.
 
 describe("The GlossaryService", () => {
-  test("should create a table if it does not already exist", async () => {
+  test("should create glossary table if it does not already exist", async () => {
     await Word.run(async (context) => {
       context.document.body.tables.load("items");
       await context.sync();
@@ -55,7 +55,7 @@ describe("The GlossaryService", () => {
     expect(wordMock.context.document.body.tables.items.length).toBe(1);
   });
 
-  test("should not create a table if it already exists", async () => {
+  test("should not create glossary table if it already exists", async () => {
     await Word.run(async (context) => {
       context.document.body.tables.load("items");
       await context.sync();
